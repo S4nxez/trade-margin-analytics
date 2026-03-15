@@ -42,3 +42,4 @@ build/
 *.zip
 SpringBoot/.idea/modules.xml
 SpringBoot/.idea/modules.xml
+.env
