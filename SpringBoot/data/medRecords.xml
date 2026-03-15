@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<medRecords>
+    <medRecord>
+        <id>1</id>
+        <idPatient>1</idPatient>
+        <idDoctor>1</idDoctor>
+        <diagnosis>Diabetes</diagnosis>
+        <date>08/10/2024</date>
+        <medications>
+            <medication>Diabetes</medication>
+        </medications>
+    </medRecord>
+    <medRecord>
+        <id>2</id>
+        <idPatient>1</idPatient>
+        <idDoctor>3</idDoctor>
+        <diagnosis>sdfsdfss</diagnosis>
+        <date>01/04/0023</date>
+        <medications>
+            <medication>[Ibuprofen]</medication>
+        </medications>
+    </medRecord>
+    <medRecord>
+        <id>4</id>
+        <idPatient>1</idPatient>
+        <idDoctor>3</idDoctor>
+        <diagnosis>asdads</diagnosis>
+        <date>08/10/2024</date>
+        <medications>
+            <medication>[Insulin]</medication>
+        </medications>
+    </medRecord>
+    <medRecord>
+        <id>5</id>
+        <idPatient>1</idPatient>
+        <idDoctor>5</idDoctor>
+        <diagnosis>zxcxzc</diagnosis>
+        <date>12/03/1231</date>
+        <medications>
+            <medication>[Tylenol]</medication>
+        </medications>
+    </medRecord>
+</medRecords>

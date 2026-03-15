@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CSS de Bootstrap -->
+<!-- JavaScript de Bootstrap (jQuery requerido) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script defer src="js/medRecord.js"></script>
+<script defer src="js/patient.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <h2>CRUD patients</h2>
+                <button id="addButton" class="btn btn-success">Add</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <table id="patientTable" class="table table-bordered table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>BirthDate</th>
+                            <th>Phone</th>
+                            <th>Paid</th>
+                            <th>Action</th>
+                            <th>Action</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="col-sm-4 ml-3" id="infoContainer"></div>
+        </div>
+
+
+        </div>
+    </div>
+
+    <!---------------MODAL WINDOWS --------------------->
+
+    <!-- Modal for add patient-->
+    <div class="modal" id="addpatientModal" tabindex="-1" aria-labelledby="addpatientModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addpatientModalLabel">Add New patient</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for adding a new patient -->
+                    <form id="addpatientForm">
+                        <div class="mb-3">
+                            <label for="addpatientName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="addpatientName" required>
+                            <label for="addpatientDOB" class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control" id="addpatientDOB" required>
+                            <label for="addpatientPhone" class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="addpatientPhone" required>
+                            <label for="addpatientUserName" class="form-label">UserName</label>
+                            <input type="text" class="form-control" id="addpatientUserName" required>
+                            <label for="addpatientPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="addpatientPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add patient</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for update patient-->
+    <div class="modal" id="updatepatientModal" tabindex="-1" aria-labelledby="updatepatientModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updatepatientModalLabel">Update patient</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for updating patient -->
+                    <form id="updatepatientForm">
+                        <div class="mb-3">
+                            <label for="updatepatientId" class="form-label">patient Id</label>
+                            <input type="text" class="form-control" id="updatepatientId" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updatepatientName" class="form-label">patient Name</label>
+                            <input type="text" class="form-control" id="updatepatientName" required>
+                            <label for="updatepatientDOB" class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control" id="updatepatientDOB" required>
+                            <label for="updatepatientPhone" class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="updatepatientPhone" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update patient</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for add MedRecord-->
+    <div class="modal" id="addMedRecordModal" tabindex="-1" aria-labelledby="addMedRecordModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMedRecordModalLabel">Add New MedRecord</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for adding a new patient -->
+                    <form id="addMedRecordForm">
+                        <div class="mb-3">
+                            <label for="addMedRecordDesc" class="form-label">MedRecord diagnosis</label>
+                            <input type="text" class="form-control" id="addMedRecordDesc" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addMedRecordDate" class="form-label">MedRecord date</label>
+                            <input type="date" class="form-control" id="addMedRecordDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addMedRecordDoctor" class="form-label">Doctor</label>
+                            <select class="form-select" id="addMedRecordDoctor" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addMedRecordMeds" class="form-label">Medications</label>
+                            <select class="form-select" id="addMedRecordMeds" multiple></select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Add MedRecord</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Modal for update MedRecord-->
+        <div class="modal" id="updateMedRecordModal" tabindex="-1" aria-labelledby="updateMedRecordModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateMedRecordModalLabel">Update MedRecord</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for updating an MedRecord -->
+                    <form id="updateMedRecordForm">
+                        <div class="mb-3">
+                            <label for="updateMedRecordId" class="form-label">MedRecord ID</label>
+                            <input type="text" class="form-control" id="updateMedRecordId" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateMedRecordDesc" class="form-label">MedRecord diagnosis</label>
+                            <input type="text" class="form-control" id="updateMedRecordDesc" required>
+                        </div>
+                        <div class="mb-3" hidden>
+                            <label for="updateMedRecordDate" class="form-label">MedRecord date</label>
+                            <input type="date" class="form-control" id="updateMedRecordDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateMedRecordIdPatient" class="form-label">Patient ID</label>
+                            <input type="text" class="form-control" id="updateMedRecordIdPatient" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateMedRecordIdDoctor" class="form-label">Doctor</label>
+                            <select class="form-select" id="updateMedRecordIdDoctor" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateMedRecordMeds" class="form-label">Medications</label>
+                            <select class="form-select" id="updateMedRecordMeds" multiple></select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update MedRecord</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
