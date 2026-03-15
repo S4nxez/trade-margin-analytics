@@ -19,11 +19,11 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_trade_margin
+          chmod 600 ~/.ssh/deploy_trade_margin
           ssh-keyscan -H 100.68.170.113 >> ~/.ssh/known_hosts
 
       - name: Deploy
         run: |
-          ssh sanxez@100.68.170.113 \
+          ssh -i ~/.ssh/deploy_trade_margin sanxez@100.68.170.113 \
             "podman auto-update --rollback"
