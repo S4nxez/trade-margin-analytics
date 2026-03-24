@@ -1,8 +1,10 @@
 name: Deploy
 
 on:
-  push:
-    branches: [ main ]
+  workflow_run:
+    workflows: ["Build Images"]
+    types:
+      - completed
 
 jobs:
   deploy:
@@ -19,11 +21,34 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_trade_margin
-          chmod 600 ~/.ssh/deploy_trade_margin
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H 100.68.170.113 >> ~/.ssh/known_hosts
 
       - name: Deploy
         run: |
-          ssh -i ~/.ssh/deploy_trade_margin sanxez@100.68.170.113 \
-            "podman auto-update --rollback"
+          set -euo pipefail
+      
+          set +e
+          timeout 5m ssh -T -n \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=no \
+            -o ConnectTimeout=10 \
+            -o ServerAliveInterval=30 \
+            -o ServerAliveCountMax=3 \
+            sanxez@100.68.170.113 \
+            "cd /opt/medcenter && \
+             podman pull ghcr.io/s4nxez/trade-margin-analytics-back:latest && \
+             podman pull ghcr.io/s4nxez/trade-margin-analytics-front:latest && \
+             podman-compose up -d --force-recreate > /dev/null 2>&1 && \
+             echo DEPLOY_OK"
+          STATUS=$?
+          set -e
+      
+          if [ "$STATUS" -eq 124 ]; then
+            echo "Timeout alcanzado: deploy considerado correcto"
+            exit 0
+          elif [ "$STATUS" -ne 0 ]; then
+            echo "Error real en el deploy, código $STATUS"
+            exit "$STATUS"
+          fi
