@@ -1,0 +1,113 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+  line-height: 1.5;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 10px;
+  gap: 10px;
+}
+
+h1 {
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Dashboard */
+.dashboard {
+  flex: 0 0 180px;
+  max-height: 25vh;
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 5px;
+}
+
+/* MAIN: mapa + panel */
+.main {
+  flex: 1;
+  display: flex;
+  gap: 10px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* MAPA */
+#map {
+  flex: 1 1 60%;
+  border-radius: 12px;
+  min-height: 0;
+}
+
+/* PANEL LATERAL */
+.panel {
+  flex: 1 1 auto; /* se expande según el espacio restante */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 250px;
+  overflow: visible; /* se ajusta al contenido */
+  padding-bottom: 5px;
+}
+
+/* TARJETAS DE RUTA */
+.route-card {
+  background: #1e293b;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.route-card:hover {
+  background: #334155;
+}
+.route-title { font-weight: bold; margin-bottom: 5px; }
+.metric { font-size: 13px; margin: 3px 0; }
+.good { color: #22c55e; }
+.medium { color: #f59e0b; }
+.bad { color: #ef4444; }
+
+/* RECOMENDACIÓN */
+.recommendation {
+  background: #020617;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #22c55e;
+  margin-top: auto;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 992px) {
+  .main { flex-direction: column; }
+  #map { order: 1; width: 100%; min-height: 180px; }
+  .panel { order: 2; width: 100%; flex: 1 1 auto; max-height: none; }
+  .dashboard { flex: 0 0 120px; max-height: 20vh; }
+}
+
+@media (max-width: 600px) {
+  h1 { font-size: 1.5rem; }
+  .route-card { font-size: 12px; }
+  .metric { font-size: 11px; }
+  .dashboard { flex: 0 0 100px; max-height: 12vh; }
+  #map { min-height: 120px; }
+  .panel { flex: 1 1 auto; max-height: none; overflow: visible; }
+}
