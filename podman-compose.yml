@@ -16,7 +16,7 @@ services:
       - trademargin-net
 
   backend:
-    image: ghcr.io/s4nxez/trade-margin-analytics:latest
+    image: ghcr.io/s4nxez/trade-margin-analytics-back:latest
     restart: always
     depends_on:
       mysql:
@@ -32,7 +32,7 @@ services:
       - trademargin-net
 
   frontend:
-    image: ghcr.io/s4nxez/trade-margin-analytics:latest
+    image: ghcr.io/s4nxez/trade-margin-analytics-front:latest
     restart: always
     networks:
       - trademargin-net
@@ -41,7 +41,7 @@ services:
     image: caddy:latest
     restart: always
     ports:
-      - "8080:80"
+      - "8081:80"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:Z
       - caddy_data:/data
@@ -55,5 +55,5 @@ volumes:
   caddy_config:
 
 networks:
-  medcenter-net:
+  trademargin-net:
     external: false
