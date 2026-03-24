@@ -37,7 +37,7 @@ jobs:
             -o ServerAliveInterval=30 \
             -o ServerAliveCountMax=3 \
             sanxez@100.68.170.113 \
-            "cd /opt/medcenter && \
+            "cd /opt/trade_margin_analytics && \
              podman pull ghcr.io/s4nxez/trade-margin-analytics-back:latest && \
              podman pull ghcr.io/s4nxez/trade-margin-analytics-front:latest && \
              podman-compose up -d --force-recreate > /dev/null 2>&1 && \
