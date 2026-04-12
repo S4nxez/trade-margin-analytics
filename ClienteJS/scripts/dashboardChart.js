@@ -63,7 +63,12 @@ const dashboardChart = new Chart(ctx, {
     },
     plugins: {
       legend: {
-        labels: { color: "white" }
+        labels: {
+          color: "white",
+          font: {
+            size: 25
+          }
+        }
       },
       tooltip: {
         backgroundColor: '#111',
@@ -78,7 +83,12 @@ const dashboardChart = new Chart(ctx, {
     },
     scales: {
       x: {
-        ticks: { color: "white" },
+        ticks: {
+          color: "white",
+          font: {
+            size: 20
+          }
+        },
         grid: { color: 'rgba(255,255,255,0.05)' }
       },
       y: {
@@ -86,6 +96,9 @@ const dashboardChart = new Chart(ctx, {
         max: 100,
         ticks: {
           color: "white",
+          font: {
+            size: 18
+          },
           callback: value => value + ''
         },
         grid: { color: 'rgba(255,255,255,0.05)' }
