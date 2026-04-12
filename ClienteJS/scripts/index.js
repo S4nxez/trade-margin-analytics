@@ -1,14 +1,3 @@
-// ======================
-// MAPA CON LÍMITES DE ZOOM
-// ======================
-const map = L.map("map", {
-  worldCopyJump: false, // evita bucle horizontal
-  maxBounds: [[-85, -180],[85,180]], // límites vertical y horizontal
-  minZoom: 2,
-  maxZoom: 6
-}).setView([40, 0], 2);
-
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: "&copy; OpenStreetMap" }).addTo(map);
 let currentLayer;
 
 // ======================
@@ -41,15 +30,6 @@ function renderRoutes() {
 }
 
 // ======================
-// DIBUJAR RUTA
-// ======================
-function drawRoute(route){
-  if(currentLayer) map.removeLayer(currentLayer);
-  currentLayer = L.polyline(route.coords,{ color:"#22c55e", weight:4 }).addTo(map);
-  map.fitBounds(currentLayer.getBounds());
-}
-
-// ======================
 // MEJOR RUTA
 // ======================
 function calculateBestRoute(){
@@ -63,31 +43,6 @@ function renderBestRoute(){
   const best=calculateBestRoute();
   document.getElementById("best-route").innerText=best.name;
 }
-
-// ======================
-// DASHBOARD MOCK MEJORADO
-// ======================
-const ctx = document.getElementById('dashboardChart').getContext('2d');
-const dashboardChart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
-    datasets: [
-      { label: 'Coste medio por ruta (€)', data: [1200, 1150, 1300, 1250], borderColor: '#22c55e', backgroundColor: 'rgba(34,197,94,0.3)', tension:0.4, fill:true },
-      { label: 'Tiempo medio (días)', data: [25, 28, 22, 26], borderColor: '#f59e0b', backgroundColor: 'rgba(245,158,11,0.3)', tension:0.4, fill:true },
-      { label: 'Riesgo medio (%)', data: [50, 30, 60, 40], borderColor: '#ef4444', backgroundColor: 'rgba(239,68,68,0.3)', tension:0.4, fill:true }
-    ]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: { legend:{labels:{color:"white"}} },
-    scales:{
-      x:{ ticks:{color:"white"} },
-      y:{ ticks:{color:"white"} }
-    }
-  }
-});
 
 // ======================
 // INIT
