@@ -1,15 +1,4 @@
 :80 {
-    # API under the external prefix
-    handle_path /trade-margin-analytics/api/* {
-        reverse_proxy backend:8080
-    }
-
-    # Frontend under the external prefix
-    handle_path /trade-margin-analytics/* {
-        reverse_proxy frontend:80
-    }
-
-    # Optional local root for testing inside the container/service
     handle_path /api/* {
         reverse_proxy backend:8080
     }

@@ -24,9 +24,9 @@ services:
     env_file:
       - ./SpringBoot/.env
     environment:
-      DB_URL: jdbc:mysql://mysql:3306/TradeAnalytics
-      DB_USER: root
-      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      DB_URL: ${DB_URL}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
       SPRING_PROFILES_ACTIVE: spring
     networks:
       - trademargin-net
@@ -41,7 +41,7 @@ services:
     image: caddy:latest
     restart: always
     ports:
-      - "8081:80"
+      - "127.0.0.1:8081:80"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:Z
       - caddy_data:/data
