@@ -14,6 +14,11 @@ services:
       - ./mysql-init:/docker-entrypoint-initdb.d:Z
     networks:
       - trademargin-net
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
 
   backend:
     image: ghcr.io/s4nxez/trade-margin-analytics-back:latest
@@ -24,9 +29,9 @@ services:
     env_file:
       - ./SpringBoot/.env
     environment:
-      DB_URL: ${DB_URL}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
+      DB_URL: jdbc:mysql://mysql:3306/TradeAnalytics
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       SPRING_PROFILES_ACTIVE: spring
     networks:
       - trademargin-net
