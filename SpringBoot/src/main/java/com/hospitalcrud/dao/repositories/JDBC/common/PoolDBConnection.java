@@ -1,6 +1,6 @@
 package com.hospitalcrud.dao.repositories.JDBC.common;
 
-import com.hospitalcrud.config.Configuration;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -14,20 +14,23 @@ import javax.sql.DataSource;
 @Component
 public class PoolDBConnection {
 
-    private final Configuration config;
     private final DataSource hikariDataSource;
 
-    public PoolDBConnection(Configuration config) {
-        this.config = config;
-        this.hikariDataSource = getHikariPool();
+    public PoolDBConnection(
+            @Value("${spring.datasource.url}") String jdbcUrl,
+            @Value("${spring.datasource.username}") String username,
+            @Value("${spring.datasource.password}") String password,
+            @Value("${spring.datasource.driver-class-name}") String driverClassName
+    ) {
+        this.hikariDataSource = getHikariPool(jdbcUrl, username, password, driverClassName);
     }
 
-    private DataSource getHikariPool() {
+    private DataSource getHikariPool(String jdbcUrl, String username, String password, String driverClassName) {
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(config.getProperty("urlDB"));
-        hikariConfig.setUsername(config.getProperty("user_name"));
-        hikariConfig.setPassword(config.getProperty("password"));
-        hikariConfig.setDriverClassName(config.getProperty("driver"));
+        hikariConfig.setJdbcUrl(jdbcUrl);
+        hikariConfig.setUsername(username);
+        hikariConfig.setPassword(password);
+        hikariConfig.setDriverClassName(driverClassName);
         hikariConfig.setMaximumPoolSize(4);
 
         hikariConfig.addDataSourceProperty("cachePrepStmts", true);
