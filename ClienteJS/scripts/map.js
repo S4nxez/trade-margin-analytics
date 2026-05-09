@@ -8,27 +8,32 @@ let countriesLayer = null;
 async function initMap() {
   map = L.map("map", {
     worldCopyJump: false,
-    maxBounds: [[-85, -180], [85, 180]],
+    maxBounds: [
+      [-85, -180],
+      [85, 180],
+    ],
     minZoom: 2,
     maxZoom: 6,
     zoomControl: true,
-    attributionControl: false
+    attributionControl: false,
   }).setView([25, 0], 2);
 
   map.getContainer().style.background = "transparent";
 
-  const res = await fetch("https://r2.datahub.io/clt98h8dr0009jm08pfa0slcf/main/raw/countries.geojson");
+  const res = await fetch(
+    "https://r2.datahub.io/clt98h8dr0009jm08pfa0slcf/main/raw/countries.geojson",
+  );
   const countries = await res.json();
 
   countriesLayer = L.geoJSON(countries, {
     style: {
-      color: "rgba(34, 197, 94, 0.25)", // más tenue
+      color: "rgba(34, 197, 94, 0.51)", // más tenue
       weight: 1,
-      fillColor: "#22c55e",
+      fillColor: "#228fc5",
       fillOpacity: 0.03, // relleno muy ligero
-      opacity: 0.8
+      opacity: 0.8,
     },
-    interactive: false
+    interactive: false,
   }).addTo(map);
 }
 
@@ -51,7 +56,7 @@ function createCurvedLine(coords) {
 
     const controlPoint = [
       midLat + offset * Math.sign(end[1] - start[1]),
-      midLng
+      midLng,
     ];
 
     // interpolación cuadrática
@@ -86,7 +91,7 @@ function drawRoute(route) {
     color: "#22c55e",
     weight: 8,
     opacity: 0.15,
-    lineCap: "round"
+    lineCap: "round",
   });
 
   const mainLine = L.polyline(curvedCoords, {
@@ -95,14 +100,14 @@ function drawRoute(route) {
     opacity: 1,
     lineCap: "round",
     lineJoin: "round",
-    dashArray: "6 10" // efecto más moderno tipo flujo
+    dashArray: "6 10", // efecto más moderno tipo flujo
   });
 
   currentLayer = L.layerGroup([glow, mainLine]).addTo(map);
 
   map.fitBounds(mainLine.getBounds(), {
     padding: [60, 60],
-    animate: true
+    animate: true,
   });
 }
 
