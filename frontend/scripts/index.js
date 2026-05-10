@@ -195,7 +195,7 @@ async function fetchRoutes() {
   renderRoutesLoading();
   try {
     const response = await fetch(
-      `/api/routes?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`,
+      `/trade-analytics/api/routes?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`,
     );
 
     if (!response.ok) {
