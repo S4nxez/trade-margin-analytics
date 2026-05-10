@@ -7,5 +7,3 @@ CREATE TABLE credential (
 
                           UNIQUE (user_id, username)
 );
-
-
