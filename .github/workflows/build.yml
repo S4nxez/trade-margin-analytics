@@ -37,7 +37,7 @@ jobs:
 
       - name: Build backend (multi-arch)
         run: |
-          cd SpringBoot
+          cd server
           mvn clean package -DskipTests
           docker buildx build \
             -f Containerfile \
@@ -47,7 +47,7 @@ jobs:
 
       - name: Build frontend (multi-arch)
         run: |
-          cd ClienteJS
+          cd frontend
           docker buildx build \
             -f Containerfile \
             --platform linux/amd64,linux/arm64 \
