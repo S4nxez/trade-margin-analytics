@@ -2,4 +2,6 @@ FROM nginx:alpine
 
 COPY . /usr/share/nginx/html
 
+RUN echo "window.API_BASE='/api';" > /usr/share/nginx/html/config.js
+
 EXPOSE 80

@@ -1,41 +1,6 @@
 let routes = [
-  {
+ 	{
     id: 1,
-    name: "China → España (Directo)",
-    coords: [
-      [31.23, 121.47],
-      [40.41, -3.7],
-    ],
-    cost: 1200,
-    time: 25,
-    risk: "medium",
-  },
-  {
-    id: 2,
-    name: "China → Países Bajos → España",
-    coords: [
-      [31.23, 121.47],
-      [52.36, 4.9],
-      [40.41, -3.7],
-    ],
-    cost: 1050,
-    time: 30,
-    risk: "low",
-  },
-  {
-    id: 3,
-    name: "China → Panamá → España",
-    coords: [
-      [31.23, 121.47],
-      [8.98, -79.52],
-      [40.41, -3.7],
-    ],
-    cost: 1140,
-    time: 35,
-    risk: "medium",
-  },
-  {
-    id: 4,
     name: "China → Francia → España",
     coords: [
       [31.23, 121.47],
@@ -47,41 +12,17 @@ let routes = [
     risk: "medium",
   },
   {
-    id: 5,
-    name: "China → Alemania → España",
+    id: 2,
+    name: "China → Pamá → España",
     coords: [
       [31.23, 121.47],
-      [52.52, 13.4],
+      [8.98, -79.52],
       [40.41, -3.7],
     ],
-    cost: 1020,
-    time: 29,
-    risk: "low",
-  },
-  {
-    id: 6,
-    name: "China → Emiratos Árabes Unidos → España",
-    coords: [
-      [31.23, 121.47],
-      [25.2, 55.27],
-      [40.41, -3.7],
-    ],
-    cost: 980,
-    time: 33,
-    risk: "high",
-  },
-  {
-    id: 7,
-    name: "China → México → España",
-    coords: [
-      [31.23, 121.47],
-      [19.43, -99.13],
-      [40.41, -3.7],
-    ],
-    cost: 1170,
-    time: 36,
+    cost: 1140,
+    time: 35,
     risk: "medium",
-  },
+  }
 ];
 
 const routesContainer = document.getElementById("routes");
@@ -153,7 +94,11 @@ function renderRoutes() {
       </div>
     `;
 
-    card.addEventListener("click", () => drawRoute(route));
+    card.addEventListener("click", () => {
+      drawRoute(route);
+      // Conexión opcional con la calculadora de costes
+      document.dispatchEvent(new CustomEvent("route:selected", { detail: route }));
+    });
     routesContainer.appendChild(card);
   });
 }
@@ -195,7 +140,7 @@ async function fetchRoutes() {
   renderRoutesLoading();
   try {
     const response = await fetch(
-      `/trade-analytics/api/routes?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`,
+        `${window.API_BASE}/routes?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`,
     );
 
     if (!response.ok) {
@@ -211,11 +156,13 @@ async function fetchRoutes() {
     isLoading = false;
     renderRoutes();
     renderBestRoute();
+    document.dispatchEvent(new CustomEvent("routes:updated"));
   } catch (error) {
     console.error("Error cargando rutas:", error);
     isLoading = false;
     renderRoutes();
     renderBestRoute();
+    document.dispatchEvent(new CustomEvent("routes:updated"));
   }
 }
 

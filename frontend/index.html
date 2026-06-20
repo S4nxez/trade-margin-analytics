@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./styles/styles.css" />
     <link rel="stylesheet" href="./styles/responsive.css" />
     <link rel="stylesheet" href="./styles/panel.css" />
+    <link rel="stylesheet" href="./styles/calculator.css" />
     <link rel="stylesheet" href="./styles/map.css" />
     <link rel="stylesheet" href="./styles/dashboard.css" />
 
@@ -18,7 +19,9 @@
     />
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./config.js"></script>
     <script defer src="./scripts/index.js"></script>
+    <script defer src="./scripts/calculator.js"></script>
     <script defer src="./scripts/dashboardChart.js"></script>
     <script defer src="./scripts/map.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -38,26 +41,87 @@
       <div class="main">
         <div id="map"></div>
         <div class="panel">
-          <div>
+          <section class="calc">
+            <div class="calc-title">Calculadora de costes</div>
 
-          </div>
+            <div class="calc-grid">
+              <input
+                id="originInput"
+                class="route-input"
+                type="text"
+                placeholder="Origen"
+                autocomplete="off"
+              />
+              <input
+                id="destinationInput"
+                class="route-input"
+                type="text"
+                placeholder="Destino"
+                autocomplete="off"
+              />
+              <input
+                id="calcValue"
+                class="route-input"
+                type="number"
+                inputmode="decimal"
+                min="0"
+                step="any"
+                placeholder="Valor mercancía (€)"
+              />
+              <input
+                id="calcWeight"
+                class="route-input"
+                type="number"
+                inputmode="decimal"
+                min="0"
+                step="any"
+                placeholder="Peso (kg)"
+              />
+              <select id="calcIncoterm" class="route-input">
+                <option value="EXW">Incoterm: EXW</option>
+                <option value="FOB" selected>Incoterm: FOB</option>
+                <option value="CIF">Incoterm: CIF</option>
+              </select>
+              <input
+                id="calcProduct"
+                class="route-input"
+                type="text"
+                placeholder="Tipo de producto"
+                autocomplete="off"
+              />
+            </div>
 
-          <div class="route-filters">
-            <input
-              id="originInput"
-              class="route-input"
-              type="text"
-              placeholder="Origen"
-              autocomplete="off"
-            />
-            <input
-              id="destinationInput"
-              class="route-input"
-              type="text"
-              placeholder="Destino"
-              autocomplete="off"
-            />
-          </div>
+            <button id="calcBtn" class="calc-btn" type="button">
+              Calcular costes
+            </button>
+
+            <div class="calc-result">
+              <div class="calc-total-row">
+                <div class="calc-total">
+                  <span class="calc-total-label">Coste total estimado</span>
+                  <span id="calcTotal" class="calc-total-value">—</span>
+                </div>
+                <span id="calcPrecision" class="calc-badge" data-level="baja">
+                  Precisión baja
+                </span>
+              </div>
+
+              <div class="calc-breakdown">
+                <div class="calc-item">
+                  <span>Transporte</span><b id="calcTransport">—</b>
+                </div>
+                <div class="calc-item">
+                  <span>Arancel</span><b id="calcDuty">—</b>
+                </div>
+                <div class="calc-item">
+                  <span>IVA</span><b id="calcVat">—</b>
+                </div>
+                <div class="calc-item">
+                  <span>Fees</span><b id="calcFees">—</b>
+                </div>
+              </div>
+            </div>
+          </section>
 
           <div id="routes" class="routes-scroll"></div>
 

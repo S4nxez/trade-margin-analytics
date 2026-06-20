@@ -2,10 +2,15 @@ package com.tradeanalytics.ui;
 
 import com.tradeanalytics.common.Constants;
 import com.tradeanalytics.dao.model.Country;
+import com.tradeanalytics.domain.model.CostRequest;
+import com.tradeanalytics.domain.model.CostResponse;
 import com.tradeanalytics.domain.model.RoutesResponse;
+import com.tradeanalytics.domain.services.CostEstimatorService;
 import com.tradeanalytics.domain.services.CountryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +23,9 @@ import java.util.List;
 public class RoutesController {
 
     private final CountryService countryService;
+    private final CostEstimatorService costEstimatorService;
 
-    public List<Country> get(){
+    public List<Country> get() {
         return countryService.get();
     }
 
@@ -29,6 +35,8 @@ public class RoutesController {
         return new RoutesResponse(countryService.getRoutes(origin, destination));
     }
 
-
-
+    @PostMapping("/cost")
+    public CostResponse estimateCost(@RequestBody CostRequest request) {
+        return costEstimatorService.estimate(request);
+    }
 }

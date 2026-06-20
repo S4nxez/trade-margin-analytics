@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("http://127.0.0.1:5500")
 public class CountryController {
 
     private final CountryService countryService;

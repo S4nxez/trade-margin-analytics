@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface RouteEdgeRepository extends JpaRepository<RouteEdge, Long> {
     List<RouteEdge> findByOriginLocationAndDestinationLocationAndActiveTrue(Location origin, Location destination);
+
+    List<RouteEdge> findByActiveTrue();
 }
